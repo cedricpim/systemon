@@ -3,9 +3,8 @@
 # Copyright © 2015, 2017 Wieland Hoffmann
 # License: MIT, see LICENSE for details
 from ..notifier import INotifier
-from .. import state_helpers
 from email.mime.text import MIMEText
-from StringIO import StringIO
+from io import StringIO
 from twisted.mail.smtp import (messageid, sendmail)
 from twisted.plugin import IPlugin
 from zope.interface.declarations import implementer
