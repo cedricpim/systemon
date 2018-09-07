@@ -4,7 +4,7 @@
 # License: MIT, see LICENSE for details
 from ..notifier import INotifier
 from email.mime.text import MIMEText
-from io import StringIO
+from io import BytesIO
 from twisted.mail.smtp import (messageid, sendmail)
 from twisted.plugin import IPlugin
 from zope.interface.declarations import implementer
@@ -54,7 +54,7 @@ class SMTPNotifier(object):
         message['From'] = self.from_
         message['To'] = self.to
         message['Message-ID'] = messageid()
-        return StringIO(message.as_string())
+        return BytesIO(message.as_string())
 
     def _send_mail(self, msg):
         """
