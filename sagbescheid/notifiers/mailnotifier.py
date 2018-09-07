@@ -16,6 +16,8 @@ class SMTPNotifier(object):
     description = "Send notification emails via twisted.mail.smtp.sendmail"
 
     def add_arguments(self, group):
+        group.add_argument("--smtp-subject", action="store", default="sagbescheid service notification",
+                           help="The SMTP subject sent")
         group.add_argument("--smtp-from", action="store",
                            help="The address to use in the From: header")
         group.add_argument("--smtp-to", action="store",
@@ -35,6 +37,7 @@ class SMTPNotifier(object):
                            help="Require STARTTLS")
 
     def handle_arguments(self, args):
+        self.subject = args.smtp_subject
         self.from_ = args.smtp_from
         self.to = args.smtp_to
         self.user = args.smtp_user
@@ -50,7 +53,7 @@ class SMTPNotifier(object):
         """
         msg = msg
         message = MIMEText(msg, _subtype='plain', _charset='utf-8')
-        message['Subject'] = "sagbescheid service notification"
+        message['Subject'] = self.subject
         message['From'] = self.from_
         message['To'] = self.to
         message['Message-ID'] = messageid()
